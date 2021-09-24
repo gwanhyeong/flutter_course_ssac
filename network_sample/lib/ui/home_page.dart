@@ -18,7 +18,11 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    fetch();
+    fetch().then((todo) {
+      setState(() {
+        _title = todo.title;
+      });
+    });
   }
 
   @override
@@ -41,16 +45,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void fetch() {
+  Future<Todo> fetch() async {
     var url = Uri.parse('https://jsonplaceholder.typicode.com/todos/1');
-    http.get(url).then((response) {
-      if (response.statusCode == 200) {
-        final jsonResponse = convert.jsonDecode(response.body);
-        Todo todo = Todo.fromJson(jsonResponse);
-        setState(() {
-          _title = todo.title;
-        });
-      }
-    });
+    final response = await http.get(url);
+
+    Map<String, dynamic> jsonResponse = convert.jsonDecode(response.body);
+    return Todo.fromJson(jsonResponse);
   }
 }
