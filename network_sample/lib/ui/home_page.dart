@@ -13,6 +13,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var _title = '';
+  List<Todo> _list = [];
 
   @override
   void initState() {
@@ -31,15 +32,30 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Network'),
       ),
-      body: Column(
+      body: ListView(
         children: [
           ElevatedButton(
             onPressed: () {
               fetch();
             },
-            child: const Text('Fetch'),
+            child: const Text('Fetch item'),
           ),
           Text(_title),
+          ElevatedButton(
+            onPressed: () async {
+              List<Todo> todos = await fetchList();
+              setState(() {
+                _list = todos;
+              });
+            },
+            child: const Text('Fetch list'),
+          ),
+          if (_list.isEmpty)
+            const Center(child: CircularProgressIndicator())
+          else
+            ..._list.map((todo) {
+              return Text(todo.title);
+            }),
         ],
       ),
     );
@@ -51,5 +67,13 @@ class _HomePageState extends State<HomePage> {
 
     Map<String, dynamic> jsonResponse = convert.jsonDecode(response.body);
     return Todo.fromJson(jsonResponse);
+  }
+
+  Future<List<Todo>> fetchList() async {
+    var url = Uri.parse('https://jsonplaceholder.typicode.com/todos');
+    final response = await http.get(url);
+
+    Iterable jsonResponse = convert.jsonDecode(response.body);
+    return jsonResponse.map((todo) => Todo.fromJson(todo)).toList();
   }
 }
