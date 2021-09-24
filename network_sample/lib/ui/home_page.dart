@@ -13,6 +13,13 @@ class _HomePageState extends State<HomePage> {
   var _title = '';
 
   @override
+  void initState() {
+    super.initState();
+
+    fetch();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -22,16 +29,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           ElevatedButton(
             onPressed: () {
-              var url =
-                  Uri.parse('https://jsonplaceholder.typicode.com/todos/1');
-              http.get(url).then((response) {
-                if (response.statusCode == 200) {
-                  final jsonResponse = convert.jsonDecode(response.body);
-                  setState(() {
-                    _title = jsonResponse['title'];
-                  });
-                }
-              });
+              fetch();
             },
             child: const Text('Fetch'),
           ),
@@ -39,5 +37,17 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+
+  void fetch() {
+    var url = Uri.parse('https://jsonplaceholder.typicode.com/todos/1');
+    http.get(url).then((response) {
+      if (response.statusCode == 200) {
+        final jsonResponse = convert.jsonDecode(response.body);
+        setState(() {
+          _title = jsonResponse['title'];
+        });
+      }
+    });
   }
 }
