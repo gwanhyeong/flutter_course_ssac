@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cardlist/api.dart';
 import 'package:cardlist/model/post.dart';
 import 'package:cardlist/widget/post_card.dart';
+import 'package:cardlist/page/post_view_page.dart';
 
 class PostListPage extends StatefulWidget {
   const PostListPage({Key? key}) : super(key: key);
@@ -27,7 +28,9 @@ class _PostListPageState extends State<PostListPage> {
               return PostCard(
                 title: post.title ?? '',
                 body: post.body ?? '',
-                onTap: () {},
+                onTap: () {
+                  openDetailPage(post);
+                },
               );
             }).toList()
           else
@@ -35,6 +38,19 @@ class _PostListPageState extends State<PostListPage> {
               child: CircularProgressIndicator(),
             ),
         ],
+      ),
+    );
+  }
+
+  void openDetailPage(Post post) {
+    if (post.id == null) return;
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PostViewPage(
+          post: post,
+        ),
       ),
     );
   }

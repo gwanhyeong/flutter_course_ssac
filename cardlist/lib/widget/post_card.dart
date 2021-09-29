@@ -24,13 +24,17 @@ class PostCard extends StatelessWidget {
               Text(
                 title,
                 style: const TextStyle(
+                  color: Colors.blue,
                   fontSize: 16,
                 ),
+                overflow: TextOverflow.ellipsis,
               ),
-              const Divider(
-                color: Colors.black12,
+              const Divider(),
+              Text(
+                body,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 3,
               ),
-              Text(body),
             ],
           ),
         ),
