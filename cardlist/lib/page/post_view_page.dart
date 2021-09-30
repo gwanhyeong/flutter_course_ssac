@@ -6,7 +6,7 @@ import 'package:cardlist/model/post.dart';
 import 'package:cardlist/model/comment.dart';
 
 class PostViewPage extends StatefulWidget {
-  final Post? post;
+  final Post post;
 
   const PostViewPage({Key? key, required this.post}) : super(key: key);
 
@@ -43,14 +43,14 @@ class _PostViewPageState extends State<PostViewPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.post?.title ?? '',
+                    widget.post.title ?? '',
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16,
                     ),
                   ),
                   const Divider(),
-                  Text(widget.post?.body ?? ''),
+                  Text(widget.post.body ?? ''),
                 ],
               ),
             ),
@@ -85,9 +85,7 @@ class _PostViewPageState extends State<PostViewPage> {
   @override
   void initState() {
     super.initState();
-    if (widget.post == null) return;
-
-    fetchComments(widget.post?.id ?? 0).then((comments) {
+    fetchComments(widget.post.id ?? 0).then((comments) {
       setState(() {
         _comments = comments;
       });
