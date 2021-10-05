@@ -9,8 +9,12 @@ Future<List<Conference>> fetchList() async {
   Uri url = Uri.parse(referenceUrl);
   final response = await http.get(url);
 
-  Iterable jsonResponse = convert.jsonDecode(response.body);
-  return jsonResponse
-      .map((conference) => Conference.fromJson(conference))
-      .toList();
+  if (response.statusCode == 200) {
+    Iterable jsonResponse = convert.jsonDecode(response.body);
+    return jsonResponse
+        .map((conference) => Conference.fromJson(conference))
+        .toList();
+  }
+
+  throw Exception('Response\'s statusCode is not 200.');
 }
