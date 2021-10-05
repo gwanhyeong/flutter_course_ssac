@@ -1,9 +1,8 @@
+import 'package:cardlist/api.dart' as api;
+import 'package:cardlist/model/comment.dart';
+import 'package:cardlist/model/post.dart';
 import 'package:cardlist/widget/post_card.dart';
 import 'package:flutter/material.dart';
-
-import 'package:cardlist/api.dart';
-import 'package:cardlist/model/post.dart';
-import 'package:cardlist/model/comment.dart';
 
 class PostViewPage extends StatefulWidget {
   final Post post;
@@ -85,7 +84,7 @@ class _PostViewPageState extends State<PostViewPage> {
   @override
   void initState() {
     super.initState();
-    fetchComments(widget.post.id ?? 0).then((comments) {
+    api.fetchComments(widget.post.id ?? 0).then((comments) {
       setState(() {
         _comments = comments;
       });

@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
-
-import 'package:cardlist/api.dart';
+import 'package:cardlist/api.dart' as api;
 import 'package:cardlist/model/post.dart';
-import 'package:cardlist/widget/post_card.dart';
 import 'package:cardlist/page/post_view_page.dart';
+import 'package:cardlist/widget/post_card.dart';
+import 'package:flutter/material.dart';
 
 class PostListPage extends StatefulWidget {
   const PostListPage({Key? key}) : super(key: key);
@@ -59,7 +58,7 @@ class _PostListPageState extends State<PostListPage> {
   void initState() {
     super.initState();
 
-    fetchPosts().then((posts) {
+    api.fetchPosts().then((posts) {
       setState(() {
         _posts = posts;
       });
