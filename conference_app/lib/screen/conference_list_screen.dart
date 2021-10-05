@@ -19,7 +19,7 @@ class ConferenceListScreen extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text(snapshot.error!.toString() ?? 'Error'));
+            return Center(child: Text(snapshot.error!.toString()));
           } else if (!snapshot.hasData) {
             return const Center(child: Text('no data'));
           }
