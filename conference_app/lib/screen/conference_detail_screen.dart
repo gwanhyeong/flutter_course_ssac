@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:conference_app/model/conference.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -20,7 +21,7 @@ class ConferenceDetailScreen extends StatelessWidget {
           children: [
             Text(data.location ?? ''),
             const SizedBox(height: 16),
-            Text('${data.start} ~ ${data.end}'),
+            Text(_getDateRange()),
             if (data.link != null)
               TextButton(
                 onPressed: _launchUrl,
@@ -36,6 +37,14 @@ class ConferenceDetailScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getDateRange() {
+    DateFormat dateFormat = DateFormat('yMMMd');
+    String startDate = dateFormat.format(DateTime.parse(data.start!));
+    String endDate = dateFormat.format(DateTime.parse(data.end!));
+
+    return (startDate != endDate) ? '$startDate ~ $endDate' : startDate;
   }
 
   void _launchUrl() async {
