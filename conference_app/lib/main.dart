@@ -1,4 +1,4 @@
-import 'package:conference_app/screen/conference_list_page.dart';
+import 'package:conference_app/screen/conference_list_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Conference App',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.brown,
       ),
       home: const ConferenceListScreen(),
     );
