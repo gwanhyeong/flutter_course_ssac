@@ -12,20 +12,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var _title = '';
-  List<Todo> _list = [];
-
-  @override
-  void initState() {
-    super.initState();
-
-    fetch().then((todo) {
-      setState(() {
-        _title = todo.title;
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,22 +26,44 @@ class _HomePageState extends State<HomePage> {
             },
             child: const Text('Fetch item'),
           ),
-          Text(_title),
-          ElevatedButton(
-            onPressed: () async {
-              List<Todo> todos = await fetchList();
-              setState(() {
-                _list = todos;
-              });
+          FutureBuilder<Todo>(
+            future: fetch(),
+            builder: (context, AsyncSnapshot<Todo> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return const Text('Error!');
+              } else if (!snapshot.hasData) {
+                return const Text('No data');
+              }
+
+              Todo? todo = snapshot.data;
+              return Text(todo?.title ?? '');
             },
+          ),
+          ElevatedButton(
+            onPressed: () {},
             child: const Text('Fetch list'),
           ),
-          if (_list.isEmpty)
-            const Center(child: CircularProgressIndicator())
-          else
-            ..._list.map((todo) {
-              return Text(todo.title);
-            }),
+          FutureBuilder<List<Todo>>(
+            future: fetchList(),
+            builder: (context, AsyncSnapshot<List<Todo>> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return const Text('Error!');
+              } else if (!snapshot.hasData) {
+                return const Text('No data');
+              }
+
+              return ListView(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                children:
+                    snapshot.data!.map((todo) => Text(todo.title)).toList(),
+              );
+            },
+          ),
         ],
       ),
     );
