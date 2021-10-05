@@ -1,5 +1,6 @@
 import 'package:conference_app/api.dart';
 import 'package:conference_app/model/conference.dart';
+import 'package:conference_app/screen/conference_detail_screen.dart';
 import 'package:conference_app/widget/conference_item.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,7 @@ class ConferenceListScreen extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return const Center(child: Text('Error!'));
+            return Center(child: Text(snapshot.error!.toString() ?? 'Error'));
           } else if (!snapshot.hasData) {
             return const Center(child: Text('no data'));
           }
@@ -27,7 +28,14 @@ class ConferenceListScreen extends StatelessWidget {
           return ListView.separated(
             itemCount: list.length,
             itemBuilder: (BuildContext context, int index) {
-              return ConferenceItem(data: list[index]);
+              Conference data = list[index];
+              return ConferenceItem(
+                title: data.name,
+                body: data.location,
+                onTap: () {
+                  openDetailScreen(context, data);
+                },
+              );
             },
             separatorBuilder: (BuildContext context, int index) {
               return const Divider();
@@ -35,6 +43,14 @@ class ConferenceListScreen extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  void openDetailScreen(BuildContext context, Conference conference) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => ConferenceDetailScreen(data: conference)),
     );
   }
 }

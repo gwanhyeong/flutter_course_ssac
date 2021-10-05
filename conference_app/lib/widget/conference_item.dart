@@ -2,9 +2,10 @@ import 'package:conference_app/model/conference.dart';
 import 'package:flutter/material.dart';
 
 class ConferenceItem extends StatelessWidget {
-  final Conference data;
+  final String? title;
+  final String? body;
   final void Function()? onTap;
-  const ConferenceItem({Key? key, required this.data, this.onTap})
+  const ConferenceItem({Key? key, this.title, this.body, this.onTap})
       : super(key: key);
 
   @override
@@ -17,13 +18,13 @@ class ConferenceItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              data.name ?? '',
+              title ?? '',
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 4),
-            Text(data.location ?? ''),
+            Text(body ?? ''),
           ],
         ),
       ),
