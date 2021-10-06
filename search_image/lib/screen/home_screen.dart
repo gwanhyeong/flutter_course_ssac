@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:search_image/api.dart';
 import 'package:search_image/model/search_result.dart';
+import 'package:search_image/widget/image_item.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -33,19 +34,15 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('API test'),
       ),
       body: SingleChildScrollView(
-        child: ListView.builder(
+        child: ListView.separated(
           shrinkWrap: true,
           itemCount: _searchResult != null ? _searchResult!.hits!.length : 0,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            final resultItem = _searchResult!.hits![index];
-            return SizedBox(
-              width: 100.0,
-              height: 100.0,
-              child: FittedBox(
-                child: Image.network(resultItem.previewURL!),
-              ),
-            );
+            return ImageItem(data: _searchResult!.hits![index]);
+          },
+          separatorBuilder: (BuildContext context, int index) {
+            return const SizedBox(height: 6.0);
           },
         ),
       ),
