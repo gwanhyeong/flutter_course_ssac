@@ -34,46 +34,41 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('API test'),
       ),
-      body: SingleChildScrollView(
-        child: ListView(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 8.0,
-                horizontal: 16.0,
-              ),
-              child: SearchBar(
-                controller: _controller,
-                onPressed: () {
-                  if (_controller.text.isEmpty) {
-                    const snackBar = SnackBar(
-                      content: Text('검색할 키워드를 입력해주세요.'),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    return;
-                  }
+      body: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 8.0,
+              horizontal: 16.0,
+            ),
+            child: SearchBar(
+              controller: _controller,
+              onPressed: () {
+                if (_controller.text.isEmpty) {
+                  const snackBar = SnackBar(
+                    content: Text('검색할 키워드를 입력해주세요.'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  return;
+                }
 
-                  _searchKeyword(_controller.text);
-                },
-              ),
-            ),
-            const SizedBox(height: 16),
-            ListView.separated(
-              shrinkWrap: true,
-              itemCount:
-                  _searchResult != null ? _searchResult!.hits!.length : 0,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return ImageItem(data: _searchResult!.hits![index]);
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return const SizedBox(height: 6.0);
+                _searchKeyword(_controller.text);
               },
             ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 16),
+          ListView.separated(
+            shrinkWrap: true,
+            itemCount: _searchResult != null ? _searchResult!.hits!.length : 0,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              return ImageItem(data: _searchResult!.hits![index]);
+            },
+            separatorBuilder: (BuildContext context, int index) {
+              return const SizedBox(height: 6.0);
+            },
+          ),
+        ],
       ),
     );
   }
