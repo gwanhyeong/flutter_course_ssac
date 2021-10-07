@@ -14,15 +14,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   SearchResult? _searchResult;
   late TextEditingController _controller;
-  late SnackBar _snackBar;
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
-    _snackBar = const SnackBar(
-      content: Text('검색할 키워드를 입력해주세요.'),
-    );
     _searchKeyword('iphone');
   }
 
@@ -52,7 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 controller: _controller,
                 onPressed: () {
                   if (_controller.text.isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(_snackBar);
+                    const snackBar = SnackBar(
+                      content: Text('검색할 키워드를 입력해주세요.'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     return;
                   }
 
@@ -79,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _searchKeyword(String keyword) async {
+  void _searchKeyword(String keyword) {
     fetchSearchResult(keyword).then((SearchResult result) {
       setState(() {
         _searchResult = result;
