@@ -1,10 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/screen/account_screen.dart';
 import 'package:instagram_clone/screen/home_screen.dart';
 import 'package:instagram_clone/screen/search_screen.dart';
 
 class TabScreen extends StatefulWidget {
-  const TabScreen({Key? key}) : super(key: key);
+  final User? user;
+  const TabScreen({Key? key, this.user}) : super(key: key);
 
   @override
   _TabScreenState createState() => _TabScreenState();

@@ -27,9 +27,12 @@ class HomeScreen extends StatelessWidget {
           child: Center(
             child: Column(
               children: [
-                const Text(
-                  'Instagram에 오신 것을 환영합니다',
-                  style: TextStyle(fontSize: 24.0),
+                const FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    'Instagram에 오신 것을 환영합니다',
+                    style: TextStyle(fontSize: 24.0),
+                  ),
                 ),
                 const SizedBox(height: 8.0),
                 const Text('사진과 동영상을 보려면 팔로우하세요.'),
