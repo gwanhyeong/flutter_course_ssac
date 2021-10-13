@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/screen/account_screen.dart';
 import 'package:instagram_clone/screen/home_screen.dart';
+import 'package:instagram_clone/screen/search_screen.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({Key? key}) : super(key: key);
@@ -13,7 +14,7 @@ class _TabScreenState extends State<TabScreen> {
   int _selectedIndex = 0;
   List _pages = [
     HomeScreen(),
-    Text('Page2'),
+    SearchScreen(),
     AccountScreen(),
   ];
 
@@ -26,11 +27,10 @@ class _TabScreenState extends State<TabScreen> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.search), title: Text('Search')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle), title: Text('Account')),
+              icon: Icon(Icons.account_circle), label: 'Account'),
         ],
       ),
     );
