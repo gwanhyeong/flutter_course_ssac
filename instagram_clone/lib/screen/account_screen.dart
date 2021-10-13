@@ -17,7 +17,6 @@ class AccountScreen extends StatelessWidget {
         IconButton(
           onPressed: () {},
           icon: Icon(Icons.exit_to_app),
-          color: Colors.black,
         ),
       ],
     );
