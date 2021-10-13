@@ -14,9 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'Instagram Clone',
       theme: ThemeData(
         appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
-        primaryColor: Colors.white,
-        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue)
-            .copyWith(secondary: Colors.black),
+        primarySwatch: Colors.blue,
       ),
       home: const RootScreen(),
       debugShowCheckedModeBanner: false,

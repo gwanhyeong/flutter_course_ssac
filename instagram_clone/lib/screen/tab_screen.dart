@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/screen/account_screen.dart';
 import 'package:instagram_clone/screen/home_screen.dart';
 
 class TabScreen extends StatefulWidget {
@@ -13,7 +14,7 @@ class _TabScreenState extends State<TabScreen> {
   List _pages = [
     HomeScreen(),
     Text('Page2'),
-    Text('Page3'),
+    AccountScreen(),
   ];
 
   @override
