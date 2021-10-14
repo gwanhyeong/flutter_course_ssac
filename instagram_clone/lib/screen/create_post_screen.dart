@@ -1,10 +1,14 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CreatePostScreen extends StatefulWidget {
-  const CreatePostScreen({Key? key}) : super(key: key);
+  final User? user;
+  const CreatePostScreen({Key? key, this.user}) : super(key: key);
 
   @override
   _CreatePostScreenState createState() => _CreatePostScreenState();
@@ -29,7 +33,37 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
           ),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () async {
+                const snackBar = SnackBar(content: Text('Select a image'));
+
+                if (_image == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  return;
+                }
+
+                final firebaseStorageRef = FirebaseStorage.instance
+                    .ref()
+                    .child('post')
+                    .child('${DateTime.now().microsecondsSinceEpoch}.png');
+                final task = await firebaseStorageRef.putFile(
+                    File(_image!.path),
+                    SettableMetadata(contentType: 'image/png'));
+
+                var downloadUrl = task.ref.getDownloadURL();
+                downloadUrl.then((url) {
+                  var doc = FirebaseFirestore.instance.collection('post').doc();
+                  doc.set({
+                    'id': doc.id,
+                    'photoUrl': url,
+                    'contents': _textEditingController.text,
+                    'email': widget.user?.email,
+                    'displayName': widget.user?.displayName,
+                    'userPhotoUrl': widget.user?.photoURL,
+                  }).then((onValue) {
+                    Navigator.pop(context);
+                  });
+                });
+              },
               icon: const Icon(Icons.send),
             ),
           ],

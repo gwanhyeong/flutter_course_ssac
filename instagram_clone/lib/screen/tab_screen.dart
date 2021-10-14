@@ -21,7 +21,7 @@ class _TabScreenState extends State<TabScreen> {
     super.initState();
     _pages = [
       HomeScreen(user: widget.user),
-      SearchScreen(),
+      SearchScreen(user: widget.user),
       AccountScreen(user: widget.user),
     ];
   }
