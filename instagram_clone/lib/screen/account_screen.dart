@@ -44,7 +44,7 @@ class AccountScreen extends StatelessWidget {
                     width: 80.0,
                     height: 80.0,
                     child: CircleAvatar(
-                      child: Image.network(user?.photoURL ?? ''),
+                      backgroundImage: NetworkImage(user?.photoURL ?? ''),
                     ),
                   ),
                   Positioned(
@@ -68,7 +68,7 @@ class AccountScreen extends StatelessWidget {
               const SizedBox(height: 16.0),
               Text(
                 user?.displayName ?? 'Name',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ],
           ),
