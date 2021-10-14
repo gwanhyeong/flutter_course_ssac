@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:subway_info/screen/main_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,11 +10,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('실시간 지하철 정보'),
+    return MaterialApp(
+      title: '실시간 지하철 정보',
+      theme: ThemeData(
+        primarySwatch: Colors.brown,
       ),
-      body: Container(),
+      home: const MainScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
