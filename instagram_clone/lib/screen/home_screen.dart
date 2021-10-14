@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final User? user;
+
+  const HomeScreen({Key? key, this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,15 +51,17 @@ class HomeScreen extends StatelessWidget {
                           SizedBox(
                             width: 80.0,
                             height: 80.0,
-                            child: CircleAvatar(),
+                            child: CircleAvatar(
+                              child: Image.network(user?.photoURL ?? ''),
+                            ),
                           ),
                           const SizedBox(height: 16.0),
                           Text(
-                            'Email',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            user?.email ?? 'Email',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 8.0),
-                          Text('Name'),
+                          Text(user?.displayName ?? 'Name'),
                           const SizedBox(height: 16.0),
                           Wrap(
                             spacing: 6.0,

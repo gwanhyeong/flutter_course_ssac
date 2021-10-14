@@ -14,11 +14,17 @@ class TabScreen extends StatefulWidget {
 
 class _TabScreenState extends State<TabScreen> {
   int _selectedIndex = 0;
-  List _pages = [
-    HomeScreen(),
-    SearchScreen(),
-    AccountScreen(),
-  ];
+  List _pages = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _pages = [
+      HomeScreen(user: widget.user),
+      SearchScreen(),
+      AccountScreen(user: widget.user),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {

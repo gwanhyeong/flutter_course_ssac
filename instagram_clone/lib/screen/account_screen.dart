@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AccountScreen extends StatelessWidget {
+  final User? user;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-  AccountScreen({Key? key}) : super(key: key);
+  AccountScreen({Key? key, this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class AccountScreen extends StatelessWidget {
             await FirebaseAuth.instance.signOut();
             await _googleSignIn.signOut();
           },
-          icon: Icon(Icons.exit_to_app),
+          icon: const Icon(Icons.exit_to_app),
         ),
       ],
     );
@@ -30,7 +31,7 @@ class AccountScreen extends StatelessWidget {
 
   _buildBody() {
     return Padding(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -42,7 +43,9 @@ class AccountScreen extends StatelessWidget {
                   SizedBox(
                     width: 80.0,
                     height: 80.0,
-                    child: CircleAvatar(),
+                    child: CircleAvatar(
+                      child: Image.network(user?.photoURL ?? ''),
+                    ),
                   ),
                   Positioned(
                     right: 0,
@@ -64,7 +67,7 @@ class AccountScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16.0),
               Text(
-                'Name',
+                user?.displayName ?? 'Name',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ],
