@@ -1,33 +1,33 @@
-import 'package:search_image/model/search_result_item.dart';
+import 'package:search_image/model/pixabay_api_image.dart';
 
-class SearchResult {
-  SearchResult({
+class PixabayApiResult {
+  PixabayApiResult({
     int? total,
     int? totalHits,
-    List<SearchResultItem>? hits,
+    List<PixabayApiImage>? hits,
   }) {
     _total = total;
     _totalHits = totalHits;
     _hits = hits;
   }
 
-  SearchResult.fromJson(dynamic json) {
+  PixabayApiResult.fromJson(dynamic json) {
     _total = json['total'];
     _totalHits = json['totalHits'];
     if (json['hits'] != null) {
       _hits = [];
       json['hits'].forEach((v) {
-        _hits?.add(SearchResultItem.fromJson(v));
+        _hits?.add(PixabayApiImage.fromJson(v));
       });
     }
   }
   int? _total;
   int? _totalHits;
-  List<SearchResultItem>? _hits;
+  List<PixabayApiImage>? _hits;
 
   int? get total => _total;
   int? get totalHits => _totalHits;
-  List<SearchResultItem>? get hits => _hits;
+  List<PixabayApiImage>? get hits => _hits;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

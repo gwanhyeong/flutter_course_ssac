@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:search_image/model/search_result_item.dart';
+import 'package:search_image/model/pixabay_api_image.dart';
 
 class ImageItem extends StatelessWidget {
-  final SearchResultItem data;
+  final PixabayApiImage data;
   const ImageItem({Key? key, required this.data}) : super(key: key);
 
   @override

@@ -1,5 +1,5 @@
-class SearchResultItem {
-  SearchResultItem({
+class PixabayApiImage {
+  PixabayApiImage({
     int? id,
     String? pageURL,
     String? type,
@@ -47,7 +47,7 @@ class SearchResultItem {
     _userImageURL = userImageURL;
   }
 
-  SearchResultItem.fromJson(dynamic json) {
+  PixabayApiImage.fromJson(dynamic json) {
     _id = json['id'];
     _pageURL = json['pageURL'];
     _type = json['type'];
