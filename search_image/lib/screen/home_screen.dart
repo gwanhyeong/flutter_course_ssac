@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:search_image/api_inherited_widget.dart';
+import 'package:provider/provider.dart';
 import 'package:search_image/model/pixabay_api_result.dart';
+import 'package:search_image/pixabay_api_view_model.dart';
 import 'package:search_image/widget/image_item.dart';
 import 'package:search_image/widget/search_bar.dart';
 
@@ -13,27 +14,20 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late TextEditingController _controller;
-  bool _isInit = false;
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
+    Future.microtask(() {
+      context.read<PixabayApiViewModel>().fetch('iphone');
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
     _controller.dispose();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_isInit) {
-      ApiInheritedWidget.of(context).dataModel.fetch('iphone');
-      _isInit = true;
-    }
   }
 
   @override
@@ -60,36 +54,40 @@ class _HomeScreenState extends State<HomeScreen> {
                   return;
                 }
 
-                ApiInheritedWidget.of(context)
-                    .dataModel
-                    .fetch(_controller.text);
+                context.read<PixabayApiViewModel>().fetch(_controller.text);
               },
             ),
           ),
           const SizedBox(height: 16),
-          StreamBuilder<PixabayApiResult>(
-            stream: ApiInheritedWidget.of(context).dataModel.apiStream,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                final hits = snapshot.data!.hits!;
-                return ListView.separated(
-                  shrinkWrap: true,
-                  itemCount: hits.length,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return ImageItem(data: hits[index]);
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(height: 6.0);
-                  },
-                );
-              }
-
-              return const Center(child: CircularProgressIndicator());
-            },
+          Selector<PixabayApiViewModel, PixabayApiResult?>(
+            selector: (_, model) => model.result,
+            builder: _buildImages,
           ),
         ],
       ),
     );
+  }
+
+  Widget _buildImages(
+    BuildContext context,
+    PixabayApiResult? result,
+    Widget? child,
+  ) {
+    if (result != null && result.hits != null) {
+      final hits = result.hits!;
+      return ListView.separated(
+        shrinkWrap: true,
+        itemCount: hits.length,
+        physics: const NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+          return ImageItem(data: hits[index]);
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return const SizedBox(height: 6.0);
+        },
+      );
+    }
+
+    return const Center(child: CircularProgressIndicator());
   }
 }

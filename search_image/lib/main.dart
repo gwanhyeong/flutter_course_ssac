@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:search_image/api_inherited_widget.dart';
+import 'package:provider/provider.dart';
 import 'package:search_image/pixabay_api_view_model.dart';
 import 'package:search_image/screen/home_screen.dart';
 
@@ -17,8 +17,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ApiInheritedWidget(
-        dataModel: PixabayApiViewModel(),
+      home: ChangeNotifierProvider<PixabayApiViewModel>(
+        create: (_) => PixabayApiViewModel(),
         child: const HomeScreen(),
       ),
       debugShowCheckedModeBanner: false,
