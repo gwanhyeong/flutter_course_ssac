@@ -29,6 +29,10 @@ class MaskStoreViewModel with ChangeNotifier {
           .toList();
       isLoading = false;
       notifyListeners();
+    }).onError((error, stackTrace) {
+      _storeList = [];
+      isLoading = false;
+      notifyListeners();
     });
   }
 }

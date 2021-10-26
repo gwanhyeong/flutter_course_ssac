@@ -37,6 +37,6 @@ class MainScreen extends StatelessWidget {
               return StoreListItem(store: viewModel.storeList[index]);
             },
           )
-        : const Center(child: Text('데이터가 없습니다.'));
+        : const Center(child: Text('인터넷 연결이나 데이터가 없습니다.'));
   }
 }
