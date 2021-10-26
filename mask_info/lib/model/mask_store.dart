@@ -2,6 +2,14 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'mask_store.g.dart';
 
+class MaskStoreStock {
+  static const plenty = 'plenty';
+  static const some = 'some';
+  static const few = 'few';
+  static const empty = 'empty';
+  static const none = 'empty';
+}
+
 @JsonSerializable()
 class MaskStore {
   final String addr;
